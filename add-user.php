@@ -20,8 +20,8 @@ if ($existingUser) {
 }
 
 //on récupère le role par rapport au nom indiqué dans le JSON
-$request = $connexion->prepare("SELECT id FROM role WHERE nom = :nom");
-$request->execute(["nom" => $user->role]);
+$request = $connexion->prepare("SELECT id FROM role WHERE name = :name");
+$request->execute(["name" => $user->role]);
 $role = $request->fetch();
 
 //si le role n'existe pas, on renvoie une erreur 400
