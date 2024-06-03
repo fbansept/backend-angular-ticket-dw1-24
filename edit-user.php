@@ -38,15 +38,23 @@ if ($user->password == '') {
 }
 
 //on recupere l'id du role à affecter à l'utilisateur
+$requete = $connexion->prepare("SELECT id FROM role WHERE name = ?");
+$requete->execute([$user->role]);
+$role = $requete->fetch();
 
-//------
-
+//si le role n'existe pas
+if (!$role) {
+    http_response_code(400);
+    echo '{"message" : "Ce rôle n\'existe pas"}';
+    exit();
+}
 
 $requete = $connexion->prepare("UPDATE user SET 
                                     email = :email, 
                                     firstname = :firstname, 
                                     lastname = :lastname, 
-                                    password = :password
+                                    password = :password, 
+                                    id_role = :id_role
                                 WHERE id = :id");
 
 $requete->execute([
@@ -54,6 +62,7 @@ $requete->execute([
     "firstname" => $user->firstname,
     "lastname" =>  $user->lastname,
     "password" =>  $user->password,
+    "id_role" =>  $role['id'],
     "id" => $idUser
 ]);
 
