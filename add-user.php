@@ -1,6 +1,15 @@
 <?php
 
 include 'header-init.php';
+include 'jwt-helper.php';
+
+$user = extractJwtBody();
+
+if ($user->role != "Administrateur") {
+    http_response_code(403);
+    echo '{"message" : "Vous n\avez pas les droits nécessaires"}';
+    exit();
+}
 
 //tansformer le JSON en objet PHP contenant les informations de l'utilisateur
 $json = file_get_contents('php://input');
