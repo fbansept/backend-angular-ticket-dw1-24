@@ -12,4 +12,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
-$connexion = new PDO('mysql:host=localhost;dbname=angular_ticket_dw1_24', 'root', '');
+$connexion = new PDO('mysql:host=localhost;dbname=angular_ticketing_dw1_24', 'root', '');
